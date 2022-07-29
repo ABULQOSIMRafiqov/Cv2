@@ -1,0 +1,38 @@
+import cv2
+import time
+
+video_capture = cv2.VideoCapture(0)
+time.sleep(2)
+
+# enable face detection
+face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+
+# open
+while True:
+    try:
+        _, frameOrig = video_capture.read()
+        frame = cv2.resize(frameOrig, (640, 480))
+
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+        for (top, right, bottom, left) in faces:
+            cv2.rectangle(frame, (top, right), (top + bottom, right + left), (0, 0, 255), 2)
+
+            face = frame[right:right + left, top:top + bottom]
+            face = cv2.GaussianBlur(face, (23, 23), 30)
+
+            # merge this blurry rectangle to our final image
+            frame[right:right + face.shape[0], top:top + face.shape[1]] = face
+
+        cv2.imshow('@elbruno - Face Blur', frame)
+
+    except Exception as e:
+        print(f'exc: {e}')
+        pass
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+video_capture.release()
+cv2.destroyAllWindows()
