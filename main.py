@@ -1,22 +1,20 @@
 import cv2
-frameWidth = 640
-frameHeight = 380
-#(0)
-cap = cv2.VideoCapture("resurslar/testvideo.mp4")
-# cap.set(3,frameWidth)
-# cap.set(4,frameHeight)
+import numpy as np
 
-while True:
-    succes,img = cap.read()
-    img = cv2.resize(img,(frameWidth,frameHeight))
-    cv2.imshow("video",img)
+img = np.zeros((512,512,3),np.uint8)
+print(img)
+#img[:] = 255,0,0
 
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+cv2.line(img,(0,0),(img.shape[1],img.shape[0]),(0,255,0),2)
+cv2.rectangle(img,(350,100),(450,200),(0,0,255),cv2.FILLED)
+cv2.circle(img,(150,400),50,(255,0,0),3)#3
+
+cv2.putText(img,"ABULQOSIM Rafiqov ",(75,50),cv2.FONT_HERSHEY_COMPLEX,1,(0,150,0),1)
 
 
-#img = cv2.imread("resurslar/lena.jpg")
 
-#cv2.imshow("Lena",img)
 
-#cv2.waitKey(0)
+
+
+cv2.imshow("Image", img)
+cv2.waitKey(0)
