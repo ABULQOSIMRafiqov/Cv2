@@ -1,23 +1,22 @@
 import cv2
+frameWidth = 640
+frameHeight = 380
+#(0)
+cap = cv2.VideoCapture("resurslar/testvideo.mp4")
+# cap.set(3,frameWidth)
+# cap.set(4,frameHeight)
+
+while True:
+    succes,img = cap.read()
+    img = cv2.resize(img,(frameWidth,frameHeight))
+    cv2.imshow("video",img)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
 
 
-img = cv2.imread('resurslar/star.jpg')
+#img = cv2.imread("resurslar/lena.jpg")
 
-print(img.shape)
-width, height = 1000, 1000
-imgResize = cv2.resize(img,(width,height))
-print(imgResize.shape)
+#cv2.imshow("Lena",img)
 
-
-imgCropped = img[500:2880,0:1800]
-imgCropResize = cv2.resize(imgCropped,(img.shape[1],img.shape[0]))
-
-
-
-
-cv2.imshow("Star",img)
-
-#cv2.imshow("Star Resized",imgResize)
-cv2.imshow("Star Cropped",imgCropped)
-cv2.imshow("Star Cropped, Resized",imgResize)
-cv2.waitKey(0)
+#cv2.waitKey(0)
